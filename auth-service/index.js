@@ -2,19 +2,20 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT_ONE || 7070;
 const mongoose = require("mongoose");
-const User = require("./User");
+const User = require("../database-service/User");
 const jwt = require("jsonwebtoken");
 
-mongoose.connect(
-    "mongodb://localhost/auth-service",
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    },
-    () => {
-        console.log(`Auth-Service DB Connected`);
-    }
-);
+
+// mongoose.connect(
+//     "mongodb://localhost/auth-service",
+//     {
+//         useNewUrlParser: true,
+//         useUnifiedTopology: true,
+//     },
+//     () => {
+//         console.log(`Auth-Service DB Connected`);
+//     }
+// );
 
 app.use(express.json());
 
@@ -57,3 +58,5 @@ app.post("/auth/register", async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Auth-Service at ${PORT}`);
 });
+
+
