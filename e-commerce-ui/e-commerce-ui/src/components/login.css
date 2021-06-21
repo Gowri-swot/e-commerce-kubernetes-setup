@@ -1,0 +1,21 @@
+.title {
+    padding: 10px;
+    color: white;
+    background-color: #3f51b5;
+    color: white;
+    font-size: 18px !important;
+}
+.card-body {
+    width: 75%;
+    margin: 5% auto;
+    background-color: whitesmoke !important;
+}
+.formField {
+    width: 95% !important;
+    margin: 3% !important;
+}
+.buttonClass {
+    width: fit-content !important;
+    margin: auto !important;
+    margin-top: 10px !important;
+}
