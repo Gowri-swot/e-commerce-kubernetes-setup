@@ -1,23 +1,12 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT_ONE || 9090;
-const mongoose = require("mongoose");
-const Order = require("./Order");
+const Order = require("../database-service/Order");
 const amqp = require("amqplib");
 const isAuthenticated = require("../isAuthenticated");
 
 var channel, connection;
 
-mongoose.connect(
-    "mongodb://localhost/order-service",
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    },
-    () => {
-        console.log(`Order-Service DB Connected`);
-    }
-);
 app.use(express.json());
 
 function createOrder(products, userEmail) {
@@ -51,6 +40,13 @@ connect().then(() => {
             Buffer.from(JSON.stringify({ newOrder }))
         );
     });
+});
+
+
+app.get('/order', isAuthenticated, async (req, res) => {
+    const order_items = await Order.findAll();
+    return res.json(order_items)
+   
 });
 
 app.listen(PORT, () => {
