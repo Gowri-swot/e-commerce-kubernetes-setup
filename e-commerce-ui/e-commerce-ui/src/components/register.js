@@ -5,62 +5,62 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-export default class Register extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      name: "",
-      password: ""
-    };
-  }
-
-  render() {
-    const { email, password, name } = this.state;
+const Register = () => {
     return (
         <Card className="card-body" >
         <CardContent>
           <Typography className="title" gutterBottom>
             Register
           </Typography>
-          <form className="formClass" onSubmit={this.handleSubmit}>
-          <TextField id="name" className="col-md-12 formField" label="Name"
+          <Formik 
+          initialValues={{ email: '', password: '',name: '' }}
+          validate={values => {
+            const errors = {};
+            if (!values.email) {
+              errors.email = '*Email Id is Required';
+            } else if (
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+            ) {
+              errors.email = '*Invalid email address';
+            } if (!values.password) {
+              errors.password = '*Password is Required';
+            } if (!values.name) {
+              errors.name = '*User Name is Required';
+            }
+            return errors;
+          }}>
+         
+        
+          <Form className="formClass" onSubmit={this.handleSubmit}>
+          <Field id="name" className="col-md-12 formField" label="Name"
             name="name"
             type="text"
-            value={name}
-            onChange={this.handleChange}
+            placeholder="Enter your name"
           />
-          <TextField id="email" className="col-md-12 formField" label="Email"
+            <ErrorMessage className="errorField" name="name" component="div" />
+          <Field id="email" className="col-md-12 formField" label="Email"
             name="email"
             type="text"
-            value={email}
-            onChange={this.handleChange}
+            placeholder="Enter your email"
           />
-          <TextField id="password" className="col-md-12 formField" label="Password" 
+            <ErrorMessage className="errorField" name="email" component="div" />
+          <Field id="password" className="col-md-12 formField" label="Password" 
             name="password"
             type="password"
-            value={password}
-            onChange={this.handleChange}
+            placeholder="Enter your password"
           />
+            <ErrorMessage className="errorField" name="password" component="div" />
           <div className="row">
           <Button className="buttonClass" variant="contained" color="primary" type="submit">Login</Button>
           </div>
           
-        </form>
+        </Form>
+        </Formik>
         </CardContent>
       </Card>
     );
-  }
-
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  };
-
-  handleSubmit = event => {
-    console.log("Submitting");
-    console.log(this.state);
-  };
+  
 }
+export default Register;

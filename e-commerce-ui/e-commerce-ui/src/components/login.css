@@ -12,10 +12,18 @@
 }
 .formField {
     width: 95% !important;
-    margin: 3% !important;
+    margin: 1% !important;
+    padding: 15px;
+    border: none;
 }
 .buttonClass {
     width: fit-content !important;
     margin: auto !important;
     margin-top: 10px !important;
+}
+.errorField {
+    width: 92% !important;
+    margin: auto;
+    color: red;
+    border: none;
 }
