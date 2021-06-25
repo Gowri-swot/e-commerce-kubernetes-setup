@@ -7,6 +7,9 @@ const amqp = require("amqplib");
 const isAuthenticated = require("../isAuthenticated");
 const { response } = require("express");
 var order;
+const cors = require('cors');
+
+app.use(cors());
 
 var channel, connection;
 
@@ -28,9 +31,9 @@ app.get('/product', isAuthenticated, async (req, res) => {
 
 
 app.post("/product/buy", isAuthenticated, async (req, res) => {
-    const { ids } = req.body;
+    const { ids } = req.body
+    console.log(ids)
     let products = []
-    console.log(ids.length)
     for(let i=0; i < ids.length; i++) {
         const data = await (await Product.findByPk(ids[i])).get();
         if(data != null) {

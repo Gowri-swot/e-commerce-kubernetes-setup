@@ -6,7 +6,7 @@
     font-size: 18px !important;
 }
 .card-body {
-    width: 75%;
+    width: 70%;
     margin: 5% auto;
     background-color: whitesmoke !important;
 }
@@ -26,4 +26,30 @@
     margin: auto;
     color: red;
     border: none;
+}
+.displayCard {
+    width: 90%;
+    margin: 5% auto;
+    background-color: whitesmoke;
+    box-shadow: 3px 3px 4px 2px #8888;
+    padding:15px
+}
+.textField {
+    background-color: whitesmoke;
+    border: 1px solid #8888;
+    border-radius: 8px;
+    width: 95% !important;
+    margin: 5px !important;
+    padding: 15px;
+    
+}
+.formClass {
+    overflow-x: hidden;
+    padding: 15px;
+}
+
+.MuiDataGrid-root .MuiDataGrid-main {
+
+    height: 370px !important;
+    background-color: whitesmoke !important;
 }

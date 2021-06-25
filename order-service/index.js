@@ -4,7 +4,9 @@ const PORT = process.env.PORT_ONE || 9090;
 const Order = require("../database-service/Order");
 const amqp = require("amqplib");
 const isAuthenticated = require("../isAuthenticated");
+const cors = require('cors');
 
+app.use(cors());
 var channel, connection;
 
 app.use(express.json());

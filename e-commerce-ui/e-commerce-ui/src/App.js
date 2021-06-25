@@ -7,26 +7,26 @@ import React from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import Login from './components/login'
 import Register from './components/register'
+import Products from './components/Products'
+import Home from './pages/Home'
 
 export const store = createStore(reducers);
 
-class App extends React.Component {
-  render() {
+const App = () => {
+
     return (
         <Provider store={store}>
           <MenuBar/>
-          <Login/>
-          <Register/>
             <BrowserRouter>
-                <Switch>
-                  
-                </Switch>
-            </BrowserRouter>
+                  <Route exact path={''} component={Home}></Route>
+                  <Route exact path={'/login'} component={Login}></Route>
+                  <Route exact path={'/register'} component={Register}></Route>
+                  <Route exact path={'/products'} component={Products}></Route>
+            </BrowserRouter>  
         </Provider>
     );
   }
 
-}
 
 export default App;
 

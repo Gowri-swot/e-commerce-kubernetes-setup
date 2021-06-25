@@ -1,19 +1,20 @@
 import React from "react";
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import ErrorBoundary from './ErrorBoundary'
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import './login.css';
+import {connect} from 'react-redux';
+import { Add_user_after_login } from "../actions";
+import axios from 'axios'
 
+const Login = (props) => {
 
-const Login = () => {
-  const handleSubmit = () => {
-    alert("Called from program")
-  }
     return (
+      <ErrorBoundary>
       <Card className="card-body" >
       <CardContent>
         <Typography className="title" gutterBottom>
@@ -33,8 +34,21 @@ const Login = () => {
           errors.password = '*Password is Required';
         }
          return errors;
-       }}>
-        <Form className="formClass" onSubmit={handleSubmit}>
+       }}
+       onSubmit={values => {
+          const headers = { 
+          'Content-Type': 'application/json'
+          };
+      axios.post(`http://localhost:7070/auth/login`, values, { headers })
+        .then(response => {
+          if(response.statusText == "OK") {
+            props.dispatch(Add_user_after_login({email:values.email, token: response.data.token}));
+          } else {
+            throw new Error("Something went wrong")
+          }})
+          
+      }}>
+        <Form className="formClass">
         <Field id="email" className="col-md-12 formField" label="Email"
           name="email"
           type="text"
@@ -55,7 +69,8 @@ const Login = () => {
      </Formik>
       </CardContent>
     </Card>
+    </ErrorBoundary>
     );
   
 }
-export default Login;
+export default connect()(Login);

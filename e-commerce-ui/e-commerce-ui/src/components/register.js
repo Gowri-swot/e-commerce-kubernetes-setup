@@ -1,13 +1,16 @@
 import React from "react";
 import TextField from '@material-ui/core/TextField';
+import {connect} from 'react-redux'
 import './login.css'
+import axios from 'axios';
+import { Registered_User } from "../actions";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-const Register = () => {
+const Register = (props) => {
     return (
         <Card className="card-body" >
         <CardContent>
@@ -30,10 +33,21 @@ const Register = () => {
               errors.name = '*User Name is Required';
             }
             return errors;
+          }}
+          onSubmit={values => {
+            const headers = { 
+            'Content-Type': 'application/json'
+            };
+        axios.post(`http://localhost:7070/auth/register`, values, { headers })
+          .then(response => {
+            if(response.statusText == "OK") {
+             props.dispatch(Registered_User(true));
+            } else {
+              throw new Error("Something went wrong")
+            }})
           }}>
-         
-        
-          <Form className="formClass" onSubmit={this.handleSubmit}>
+            
+          <Form className="formClass">
           <Field id="name" className="col-md-12 formField" label="Name"
             name="name"
             type="text"
@@ -53,7 +67,7 @@ const Register = () => {
           />
             <ErrorMessage className="errorField" name="password" component="div" />
           <div className="row">
-          <Button className="buttonClass" variant="contained" color="primary" type="submit">Login</Button>
+          <Button className="buttonClass" variant="contained" color="primary" type="submit">Register</Button>
           </div>
           
         </Form>
@@ -63,4 +77,4 @@ const Register = () => {
     );
   
 }
-export default Register;
+export default connect()(Register);
